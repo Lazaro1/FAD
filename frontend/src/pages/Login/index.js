@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom';
+import { firebaseAuth } from '../../services/firebase';
 
 import './styles.css';
 
@@ -10,18 +11,19 @@ import Imagem from '../../assets/images/bg-01.jpeg'
 function Login(){
 
     const [ email, setEmail ] = useState('')
-    const [ senha, setSenha ] = useState('')
+    const [ password, setPassword ] = useState('')
 
     const history = useHistory();
 
-    const redirect = () => {
-
-        if (email !== '' && senha !== '') {
-            history.push('/Home')
-        } else {
-            alert('Email ou senha branco ou inválido')
+    const redirect = async (e) => {
+        e.preventDefault();
+        try {
+            let resultAuth = await firebaseAuth().signInWithEmailAndPassword(email, password);
+            history.push('/home')
+        } catch (error) {
+            alert('Houve um erro: ' + error.message)
         }
-
+        
     }
 
     return(
@@ -33,16 +35,16 @@ function Login(){
 
                 <div className='third-container'>
                     <h1>Login</h1>   
-                    <form className='form-container'>
+                    <form className='form-container' onSubmit={redirect}>
                         <div>
-                            <input type='' placeholder='Email' onChange={(e)=>setEmail(e.target.value)} />
+                            <input type='email' placeholder='Email' value={email} onChange={(e)=>setEmail(e.target.value)} />
                         </div>
                         <div>
-                            <input type='Senha' placeholder='Senha' onChange={(e) => setSenha(e.target.value)} />
+                            <input type='password' placeholder='Senha' value={password} onChange={(e) => setPassword(e.target.value)} />
                         </div>
-                        
+                        <button>Entrar</button> 
                     </form>
-                    <button onClick={redirect}>Entrar</button> 
+                    
                 </div>
 
             </div>

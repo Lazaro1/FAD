@@ -1,50 +1,48 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { firebaseFirestore } from '../../services/firebase';
 
 import './styles.css';
 
-import ListItem from '../../components/ListItem'
-import NewTaskInput from '../../components/NewTaskInput'
 import Header from '../../components/Header'
-import occourence from '../../components/NewOccurrence'
 
-function Home (){
-    // const [tasks, setTasks] = useState([]);
+function Home() {
+    const [registers, setRegisters] = useState([])
 
-    // function addNewTask(task){
-    //     const itensCopy = Array.from(tasks);
-    //     itensCopy.push({id: tasks.length, value: task});
-    //     setTasks(itensCopy);
-    // }
+    useEffect(() => {
+        console.log('renderizou')
+        getAll();
+    }, [])
 
-    // function updateTask({target}, index) {
-    //     const itensCopy = Array.from(tasks);
-    //     itensCopy.splice(index, 1, { id: index, value: target.value });
-    //     setTasks(itensCopy);
-    //   }
-    
-    //   function deleteTask(index) {
-    //     const itensCopy = Array.from(tasks);
-    //     itensCopy.splice(index, 1);
-    //     setTasks(itensCopy);
-    //   }
 
-    return(
+    const getAll = async () => {
+        const docs = await firebaseFirestore.collection("occourence").get();
+
+
+        const tempDocs = [];
+
+        docs.forEach(doc => {
+            tempDocs.push(doc.data());
+        });
+
+        setRegisters(tempDocs)
+    }
+
+    return (
         <div className='App'>
             <Header />
-            <occourence />
-            {/* <div className="App-header">
-                <NewTaskInput onSubmit={addNewTask} />
-                {tasks.map(({id, value}, index) => (
-                <ListItem
-                    key={id}
-                    value={value}
-                    onChange={(event) => updateTask(event, index)}
-                    onDelete={() => deleteTask(index)}
-                />
+            <div>
+                {registers.map(register => (
+                    <div>
+                        <h1>{register.colaboration}</h1>
+                        <h1>{register.occourence}</h1>
+                        <h1>{register.sector}</h1>
+                        <h1>{register.type}</h1>
+                        <h1>{register.date}</h1>
+                    </div>
                 ))}
-            </div>              */}         
+            </div>
         </div>
     )
 }
- 
+
 export default Home;

@@ -20,14 +20,10 @@ function Header() {
                     <h1>LOGO</h1>
                 </div>
                 <div className='third-header'>
-                <button onClick={onOpenModal}>Open modal</button>
+                <button onClick={onOpenModal}>Nova Ocorrência</button>
                  <Modal open={open} onClose={onCloseModal} center>
                     <Occurence />
-                 </Modal>                    
-                    {/* <ul>
-                        <li><a href='#' onClick={onOpenModal}>Abertura de Ocorrencia</a></li>
-                        <li><a href='#'>Visualização de Ocorrencia</a></li>
-                    </ul> */}
+                 </Modal>                           
                 </div>
             </div>
         </div>
