@@ -2,14 +2,3 @@ input, textarea {
     padding: 10px;
     margin-bottom: 10px;
 }
-
-input:read-only, textarea:read-only, button:disabled {
-    background-color: grey;
-}
-
-button {
-    padding: 10px;
-    background-color: rgba(58, 42, 42, 0.933);
-    color: white;
-    cursor: pointer;
-}

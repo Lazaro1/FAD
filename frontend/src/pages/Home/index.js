@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { firebaseFirestore } from '../../services/firebase';
+import { Row, Panel, Col } from 'rsuite';
+
 
 import './styles.css';
 
@@ -25,21 +27,30 @@ function Home() {
         });
 
         setRegisters(tempDocs)
+        console.log(docs)
     }
 
     return (
         <div className='App'>
             <Header />
             <div>
-                {registers.map(register => (
-                    <div>
-                        <h1>{register.colaboration}</h1>
-                        <h1>{register.occourence}</h1>
-                        <h1>{register.sector}</h1>
-                        <h1>{register.type}</h1>
-                        <h1>{register.date}</h1>
-                    </div>
-                ))}
+                <Row>
+                    {registers.map(register => (
+
+                        <Col md={6} sm={12}>
+                            <Panel header='ID' shaded> 
+                                {register.colaboration}<br/>
+                                {register.date}<br/>
+                                {register.ocourence}<br/>
+                                {register.sector}<br/>
+                                {register.teste}<br/>
+                                {register.type}
+                            </Panel>
+                        </Col>
+
+
+                    ))}
+                </Row>
             </div>
         </div>
     )

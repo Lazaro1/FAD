@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import 'react-responsive-modal/styles.css';
-import { Modal } from 'react-responsive-modal';
 import Occurence from '../NewOccurrence/index'
+import { Button, Modal, Navbar, Icon, Nav, Grid, Row, Col } from 'rsuite'
+
+
 
 import './styles.css';
 
@@ -13,20 +15,55 @@ function Header() {
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
 
-    return(
-        <div className='header'>
-            <div className='main-header'>
+    return (
+        <div className='header navbar-page'>
+            {/* <div className='main-header'>
                 <div className='second-header'>
                     <h1>LOGO</h1>
                 </div>
                 <div className='third-header'>
-                <button onClick={onOpenModal}>Nova Ocorrência</button>
-                 <Modal open={open} onClose={onCloseModal} center>
-                    <Occurence />
-                 </Modal>                           
+                    <Button onClick={onOpenModal}>Nova Ocorrência</Button>
+                    <Modal show={open} onHide={onCloseModal} center>
+                        <Modal.Header>
+                            <Modal.Title classPrefix='modal-title'> Cadastro de Ocorrência </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Occurence />
+                        </Modal.Body>
+                    </Modal>
                 </div>
-            </div>
+            </div> */}
+
+            <Navbar >
+                <Navbar.Header>
+                    <a href="#" className="navbar-brand logo">
+                        LOGO
+                    </a>
+                </Navbar.Header>
+                <Navbar.Body>
+                    <Nav >
+
+                    </Nav>
+                    <Nav pullRight>
+                        <Nav.Item eventKey="1" >
+                            <a onClick={onOpenModal}>
+                                Modal
+                            </a>
+                        </Nav.Item>
+                    </Nav>
+                </Navbar.Body>
+            </Navbar>
+
+            <Modal show={open} onHide={onCloseModal} center>
+                <Modal.Header>
+                    <Modal.Title classPrefix='modal-title'> Cadastro de Ocorrência </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Occurence />
+                </Modal.Body>
+            </Modal>
         </div>
+
     )
 }
 

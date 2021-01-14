@@ -30,3 +30,10 @@
     color: #212529;
     text-decoration: none;
 }
+
+
+.navbar-brand {
+  padding: 18px 20px;
+  display: inline-block;
+}
+

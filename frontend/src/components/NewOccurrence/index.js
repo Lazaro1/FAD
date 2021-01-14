@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './style.css'
 import { firebaseFirestore } from '../../services/firebase';
+import { Paragraph , Loader, Button } from 'rsuite'
+
 
 function Occurence() {
 
@@ -24,18 +26,17 @@ function Occurence() {
                 teste: 'lazaro lindo',
             });
 
+            console.log(resultFirestoreAdd)
+
             setLoading(false)
         } catch (error) {
             alert('Error' + error.message)
         }
     }
 
-    return (
+    return (    
         <div className='occourence-container'>
-            <h1>Registro de Ocorrencia</h1>
-            {
-                loading ? <h1>Carregando...</h1> : <h1>.</h1>
-            }
+            {loading ? <Loader backdrop center content='carregando...'/> : ''}
 
             <form onSubmit={handleSubmit}>
                 <label >Tipo </label>
@@ -46,12 +47,12 @@ function Occurence() {
                     onChange={e => setType(e.target.value)}
                     readOnly={(loading === true )}/>
                 <label >Setor </label>
-                <input type='text' placeholder='Setor' value={sector} onChange={e => setSector(e.target.value)} readOnly={(loading === true )} />
+                <input type='text' placeholder='Setor' value={sector} onChange={e => setSector(e.target.value)} />
                 <label >Colaborador </label>
-                <input type='text' placeholder='Colaborador' value={colaboration} onChange={e => setColaboration(e.target.value)} readOnly={(loading === true )} />
+                <input type='text' placeholder='Colaborador' value={colaboration} onChange={e => setColaboration(e.target.value)} />
                 <label >Ocorrencia </label>
-                <textarea required value={occourence} onChange={e => setOccourence(e.target.value)} readOnly={(loading === true )}></textarea>
-                <button disabled={(loading === true )}>Registrar</button>
+                <textarea required value={occourence} onChange={e => setOccourence(e.target.value)} ></textarea>
+                <Button onClick={handleSubmit}>Registrar</Button>
             </form>
         </div>
     )
