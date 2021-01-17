@@ -17,23 +17,6 @@ function Header() {
 
     return (
         <div className='header navbar-page'>
-            {/* <div className='main-header'>
-                <div className='second-header'>
-                    <h1>LOGO</h1>
-                </div>
-                <div className='third-header'>
-                    <Button onClick={onOpenModal}>Nova Ocorrência</Button>
-                    <Modal show={open} onHide={onCloseModal} center>
-                        <Modal.Header>
-                            <Modal.Title classPrefix='modal-title'> Cadastro de Ocorrência </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Occurence />
-                        </Modal.Body>
-                    </Modal>
-                </div>
-            </div> */}
-
             <Navbar >
                 <Navbar.Header>
                     <a href="#" className="navbar-brand logo">
@@ -47,7 +30,7 @@ function Header() {
                     <Nav pullRight>
                         <Nav.Item eventKey="1" >
                             <a onClick={onOpenModal}>
-                                Modal
+                                Abrir ocorrencia
                             </a>
                         </Nav.Item>
                     </Nav>

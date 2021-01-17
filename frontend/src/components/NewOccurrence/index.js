@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './style.css'
 import { firebaseFirestore } from '../../services/firebase';
-import { Paragraph , Loader, Button } from 'rsuite'
+import { Paragraph, Loader, Button } from 'rsuite'
 
 
-function Occurence() {
+function Occurence(props) {
 
     const [type, setType] = useState('')
     const [sector, setSector] = useState('')
@@ -16,17 +16,26 @@ function Occurence() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            setLoading(true)
-            const resultFirestoreAdd = await firebaseFirestore.collection('occourence').add({
-                type: type,
-                sector: sector,
-                colaboration: colaboration,
-                occourence: occourence,
-                date: Date.now(),
-                teste: 'lazaro lindo',
-            });
+            if (props.isUpdating === true) {
+                console.log('Vai alterar')
+                console.log(props.registers[0].id)
 
-            console.log(resultFirestoreAdd)
+                const docs = await firebaseFirestore.collection("occourence").doc(props.registers[0].id).get();
+                const tempOccourence = {...docs.data()}
+                
+                                
+            } else {
+                console.log('Vai cadastrar')
+
+                setLoading(true)
+                const resultFirestoreAdd = await firebaseFirestore.collection('occourence').add({
+                    type: type,
+                    sector: sector,
+                    colaboration: colaboration,
+                    occourence: occourence,
+                    date: Date.now(),
+                });
+            }
 
             setLoading(false)
         } catch (error) {
@@ -34,24 +43,27 @@ function Occurence() {
         }
     }
 
-    return (    
+    return (
         <div className='occourence-container'>
-            {loading ? <Loader backdrop center content='carregando...'/> : ''}
+            {loading ? <Loader backdrop center content='carregando...' /> : ''}
+            {console.log(props.isUpdating)}
 
             <form onSubmit={handleSubmit}>
-                <label >Tipo </label>
-                <input
-                    type='text'
-                    placeholder='Tipo'
-                    value={type}
-                    onChange={e => setType(e.target.value)}
-                    readOnly={(loading === true )}/>
-                <label >Setor </label>
-                <input type='text' placeholder='Setor' value={sector} onChange={e => setSector(e.target.value)} />
-                <label >Colaborador </label>
-                <input type='text' placeholder='Colaborador' value={colaboration} onChange={e => setColaboration(e.target.value)} />
-                <label >Ocorrencia </label>
-                <textarea required value={occourence} onChange={e => setOccourence(e.target.value)} ></textarea>
+                    <label >Tipo </label>
+                    <input
+                        type='text'
+                        placeholder='Tipo'
+                        value={type}
+                        onChange={e => setType(e.target.value)}
+                        readOnly={(loading === true)} 
+                        // value={props.isUpdating ? 'tempOccourence.type ': ''}
+                        />
+                    <label >Setor </label>
+                    <input type='text' placeholder='Setor' value={sector} onChange={e => setSector(e.target.value)} />
+                    <label >Colaborador </label>
+                    <input type='text' placeholder='Colaborador' value={colaboration} onChange={e => setColaboration(e.target.value)} />
+                    <label >Ocorrencia </label>
+                    <textarea required value={occourence} onChange={e => setOccourence(e.target.value)} ></textarea>
                 <Button onClick={handleSubmit}>Registrar</Button>
             </form>
         </div>
