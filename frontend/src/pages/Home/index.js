@@ -13,6 +13,7 @@ function Home() {
     const [IsUpdating ,setIsUpdating] = useState(false)
     const [registers, setRegisters] = useState([])
     const [open, setOpen] = useState(false);
+    const [TempId, setTempId] = useState('')
 
     useEffect(() => {
         getAll();
@@ -21,7 +22,6 @@ function Home() {
 
     const getAll = async () => {
         const docs = await firebaseFirestore.collection("occourence").get();
-
 
         const tempDocs = [];
 
@@ -47,7 +47,9 @@ function Home() {
                                 {register.sector}<br />
                                 {register.teste}<br />
                                 {register.type}
+
                                 <button className='home-button' onClick={() =>{
+                                    setTempId(register.id)
                                     setIsUpdating(true)
                                     setOpen(true)
                                 }}><ImPencil /></button>
@@ -67,7 +69,7 @@ function Home() {
                     <Modal.Title classPrefix='modal-title'> Cadastro de Ocorrência </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Occurence isUpdating={IsUpdating} registers={registers} />
+                    <Occurence isUpdating={IsUpdating} id={TempId} />
                 </Modal.Body>
             </Modal>
 
